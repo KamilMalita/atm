@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 
 class OperationTest {
 
@@ -14,9 +15,9 @@ class OperationTest {
         Account acc1 = new Account(new PersonalData("Name", "Surname"));
 
         Operation.DEPOSIT.doTransactionOperation(acc1, new BigDecimal(100.15));
-        Assertions.assertEquals(new BigDecimal("100.15"), acc1.getAmount().get());
+        Assertions.assertEquals(new BigDecimal("100.15"), acc1.getAmount());
 
         Operation.WITHDRAW.doTransactionOperation(acc1, new BigDecimal(100.33));
-        Assertions.assertEquals(new BigDecimal("-0.18"), acc1.getAmount().get());
+        Assertions.assertEquals(new BigDecimal("-0.18"), acc1.getAmount());
     }
 }
