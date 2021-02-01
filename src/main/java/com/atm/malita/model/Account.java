@@ -26,13 +26,13 @@ public class Account {
 
     public void deposeMoney(BigDecimal cash) {
         amount.accumulateAndGet(cash,
-                (num1, num2) -> num1.add(num2).setScale(2, RoundingMode.HALF_EVEN));
+                (num1, num2) -> num1.add(num2).setScale(2, RoundingMode.DOWN));
         addHistoryRecord(Operation.DEPOSIT, cash);
     }
 
     public void withdrawMoney(BigDecimal cash) {
         amount.accumulateAndGet(cash,
-                (num1, num2) -> num1.subtract(num2).setScale(2, RoundingMode.HALF_EVEN));
+                (num1, num2) -> num1.subtract(num2).setScale(2, RoundingMode.DOWN));
         addHistoryRecord(Operation.WITHDRAW, cash);
     }
 
