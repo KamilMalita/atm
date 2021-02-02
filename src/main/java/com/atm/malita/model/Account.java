@@ -19,6 +19,10 @@ public class Account {
     private final AtomicReference<BigDecimal> amount;
     private final ConcurrentLinkedQueue<History> historyOperation;
 
+    private Account(){
+        throw new AssertionError();
+    }
+
     public Account(PersonalData personalData) {
         this.uniqueId = UUID.randomUUID().toString();
         this.personalData = personalData;

@@ -19,7 +19,9 @@ public class PersonalData {
     @Length(min = 5, message = "Surname must be longer than 5")
     private String surname;
 
-    private PersonalData(){}
+    private PersonalData(){
+        throw new AssertionError();
+    }
 
     public PersonalData(String name, String surname) {
         this.name = name;
