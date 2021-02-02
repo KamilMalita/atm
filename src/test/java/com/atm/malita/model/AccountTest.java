@@ -4,15 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -62,5 +56,29 @@ class AccountTest {
         }
         assertEquals("-" + numberOfThreads + ".00", account.getAmount().toString());
         assertEquals(numberOfThreads, account.getHistoryOperation().size());
+    }
+
+    @Test
+    void testModel() {
+        assertNotNull(account.getUniqueId());
+        assertNotNull(account.getHistoryOperation());
+        assertNotNull(account.getAmount());
+        assertNotNull(account.getPersonalData());
+        assertEquals(0, account.getHistoryOperation().size());
+        // check if uniqueId is in UUID format
+        boolean matchId = account.getUniqueId().matches("[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}");
+        assertTrue(matchId);
+    }
+
+    @Test
+    void getBalance() {
+        assertEquals(BigDecimal.class, account.getAmount().getClass());
+    }
+
+    @Test
+    void uniqueObject() {
+        Account account1 = new Account(new PersonalData("xxxxxxxxxx", "xxxxxxxxxx"));
+        Account account2 = new Account(new PersonalData("xxxxxxxxxx", "xxxxxxxxxx"));
+        assertNotEquals(account1.getUniqueId(), account2.getUniqueId());
     }
 }
