@@ -1,5 +1,7 @@
 package com.atm.malita.model;
 
+import com.atm.malita.exception.AccountIllegalCashValueException;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
@@ -25,12 +27,16 @@ public class Account {
     }
 
     public void deposeMoney(BigDecimal cash) {
+        if (cash.compareTo(BigDecimal.ZERO) <= 0)
+            throw new AccountIllegalCashValueException(cash);
         amount.accumulateAndGet(cash,
                 (num1, num2) -> num1.add(num2).setScale(2, RoundingMode.DOWN));
         addHistoryRecord(Operation.DEPOSIT, cash);
     }
 
     public void withdrawMoney(BigDecimal cash) {
+        if (cash.compareTo(BigDecimal.ZERO) <= 0)
+            throw new AccountIllegalCashValueException(cash);
         amount.accumulateAndGet(cash,
                 (num1, num2) -> num1.subtract(num2).setScale(2, RoundingMode.DOWN));
         addHistoryRecord(Operation.WITHDRAW, cash);

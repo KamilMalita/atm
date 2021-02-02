@@ -12,7 +12,12 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class AccountAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = AccountNotFoundException.class)
-    protected ResponseEntity<Object> handleBusinessException(RuntimeException exception, WebRequest request) {
+    protected ResponseEntity<Object> handleAccountNotFoundException(RuntimeException exception, WebRequest request) {
         return handleExceptionInternal(exception, exception.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(value = AccountIllegalCashValueException.class)
+    protected ResponseEntity<Object> handleAccountIllegalCashValueException(RuntimeException exception, WebRequest request) {
+        return handleExceptionInternal(exception, exception.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 }
